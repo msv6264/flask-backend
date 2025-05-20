@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <div class="container mt-3 m-auto">
+      <form action="/" method="POST">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title of your task. </label>
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            id="title"
+            aria-describedby="emailHelp"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="desc" class="form-label">Description of your task</label>
+          <input type="text" class="form-control" name="desc" id="desc" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+
+    <div class="container">
+      <h2 class="m-5">Your ToDo's</h2>
+      <table class="table">
+        {% if allTodo|length == 0 %} 
+          <div class="alert alert-warning" role="alert">
+            No todo found!! Add your first todo :)
+          </div>
+        {% else %}
+        <thead>
+          <tr>
+            <th scope="col">SNo</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Time</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for todo in allTodo %}
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{todo.title}}</td>
+            <td>{{todo.desc}}</td>
+            <td>{{todo.date_created}}</td>
+            <td>
+              <a href="/update/{{todo.sno}}" class="btn btn-primary">Update</a>
+            </td>
+            <td>
+              <a
+                href="/delete/{{todo.sno}}"
+                type="button"
+                class="btn btn-outline-danger"
+                >Delete</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table> 
+    {% endif %}
+    </div>
+
+    {% endblock body %}
